@@ -1,0 +1,5 @@
+#Thu Mar 28 15:12:41 CST 2013
+eclipse.preferences.version=1
+encoding//src/com/ibatis/dao/impl/ProductDaoImpl.java=GBK
+encoding//test/com/ibatis/generator/service/impl/ProductServiceImplTest.java=GBK
+encoding//test/com/ibatis/service/impl/ProductServiceImplTest.java=GBK

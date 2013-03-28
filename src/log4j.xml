@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "META-INF/log4j.dtd" >
+<log4j:configuration>
+	<!-- APPENDERS LIST -->
+	<!-- show log entries on console -->
+	<appender name="consoleAppender"
+		class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ABSOLUTE} %5p %c{1}:%L - %m%n" />
+		</layout>
+	</appender>
+
+	<!-- log all logs to a separate log file every day -->
+	<appender name="orgDevelopersLogFileAppender"
+		class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="log4j.log" />
+		<param name="datePattern" value="'.'yyyy-MM-dd" />
+		<param name="append" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %-5p %C{6} (%F:%L) - %m%n" />
+		</layout>
+	</appender>
+
+	<!-- log all logs to a separate log file every day -->
+	<appender name="comDevelopersLogFileAppender"
+		class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="file.log" />
+		<param name="datePattern" value="'.'yyyy-MM-dd" />
+		<param name="append" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %-5p %C{6} (%F:%L) - %m%n" />
+		</layout>
+	</appender>
+
+	<!-- send all error logs to my email address -->
+	<appender name="mailAppender"
+		class="org.apache.log4j.net.SMTPAppender">
+		<param name="SMTPHost" value="localhost" />
+		<param name="From" value="info@developers-blog.org" />
+		<param name="To" value="rafael@developers-blog.org" />
+		<param name="Subject" value="[BLOG ERROR LOG] ErrorList" />
+		<!-- if your buffer contains 50 mails, an email should be sent -->
+		<param name="BufferSize" value="50" />
+		<!-- send only errors per email -->
+		<param name="threshold" value="error" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ABSOLUTE} %5p %c{1}:%L - %m%n" />
+		</layout>
+	</appender>
+
+	<!-- LOGGER LIST -->
+	<!-- log all classes in org.developers package -->
+	<logger name="org.developers">
+		<!-- level info logs -->
+		<level value="INFO" />
+		<appender-ref ref="orgDevelopersLogFileAppender" />
+	</logger>
+	<logger name="com.developers">
+		<!-- level debug logs -->
+		<level value="DEBUG" />
+		<appender-ref ref="mailAppender" />
+	</logger>
+
+	<root>
+		<priority value="INFO"></priority>
+		<!-- log all log entries on console -->
+		<appender-ref ref="consoleAppender" />
+		<!-- push all error logs to mailAppender -->
+		<!-- <appender-ref ref="mailAppender" /> -->
+	</root>
+</log4j:configuration>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+"../../../META-INF/sql-map-2.dtd">
+<sqlMap namespace="com.ibatis.model.Product">
+
+	<typeAlias alias="product" type="com.ibatis.model.Product"/>
+	
+	<resultMap class="product" id="ProductMap">
+		<result property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="price" column="price"/>
+		<result property="description" column="description"/>
+		<result property="categoryid" column="categoryid"/>
+		<result property="category" column="categoryid" select="com.ibatis.model.Category.selectById"/>
+	</resultMap>
+	
+	<select id="selectAll" resultMap="ProductMap">
+		select * from product
+	</select>
+	
+	<select id="selectById" resultMap="ProductMap" parameterClass="int">
+		select * from product where id=#id#
+	</select>
+	
+	<insert id="save" parameterClass="product">
+		insert into product (name,price,description,categoryid) values (#name#,#price#,#description#,#categoryid#)
+	</insert>
+	
+	<update id="update" parameterClass="product">
+		<![CDATA[
+			update product set name=#name#,price=#price#,description=#description# where id=#id#
+		]]>
+	</update>
+	
+</sqlMap>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="product" >
+  <resultMap id="BaseResultMap" class="com.ibatis.generator.model.Product" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="REAL" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="categoryid" property="categoryid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <iterate property="oredCriteria" conjunction="or" prepend="where" removeFirstPrepend="iterate" >
+      <isEqual property="oredCriteria[].valid" compareValue="true" >
+        (
+        <iterate prepend="and" property="oredCriteria[].criteriaWithoutValue" conjunction="and" >
+          $oredCriteria[].criteriaWithoutValue[]$
+        </iterate>
+        <iterate prepend="and" property="oredCriteria[].criteriaWithSingleValue" conjunction="and" >
+          $oredCriteria[].criteriaWithSingleValue[].condition$ #oredCriteria[].criteriaWithSingleValue[].value#
+        </iterate>
+        <iterate prepend="and" property="oredCriteria[].criteriaWithListValue" conjunction="and" >
+          $oredCriteria[].criteriaWithListValue[].condition$
+          <iterate property="oredCriteria[].criteriaWithListValue[].values" open="(" close=")" conjunction="," >
+            #oredCriteria[].criteriaWithListValue[].values[]#
+          </iterate>
+        </iterate>
+        <iterate prepend="and" property="oredCriteria[].criteriaWithBetweenValue" conjunction="and" >
+          $oredCriteria[].criteriaWithBetweenValue[].condition$
+          #oredCriteria[].criteriaWithBetweenValue[].values[0]# and
+          #oredCriteria[].criteriaWithBetweenValue[].values[1]#
+        </iterate>
+        )
+      </isEqual>
+    </iterate>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, price, description, categoryid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterClass="com.ibatis.generator.model.ProductCriteria" >
+    select
+    <isParameterPresent >
+      <isEqual property="distinct" compareValue="true" >
+        distinct
+      </isEqual>
+    </isParameterPresent>
+    <include refid="product.Base_Column_List" />
+    from product
+    <isParameterPresent >
+      <include refid="product.Example_Where_Clause" />
+      <isNotNull property="orderByClause" >
+        order by $orderByClause$
+      </isNotNull>
+    </isParameterPresent>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterClass="com.ibatis.generator.model.Product" >
+    select 
+    <include refid="product.Base_Column_List" />
+    from product
+    where id = #id:INTEGER#
+  </select>
+  <delete id="deleteByPrimaryKey" parameterClass="com.ibatis.generator.model.Product" >
+    delete from product
+    where id = #id:INTEGER#
+  </delete>
+  <delete id="deleteByExample" parameterClass="com.ibatis.generator.model.ProductCriteria" >
+    delete from product
+    <include refid="product.Example_Where_Clause" />
+  </delete>
+  <insert id="insert" parameterClass="com.ibatis.generator.model.Product" >
+    insert into product (name, price, description, categoryid
+      )
+    values (#name:VARCHAR#, #price:REAL#, #description:VARCHAR#, #categoryid:INTEGER#
+      )
+    <selectKey resultClass="java.lang.Integer" keyProperty="id" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <insert id="insertSelective" parameterClass="com.ibatis.generator.model.Product" >
+    insert into product
+    <dynamic prepend="(" >
+      <isNotNull prepend="," property="name" >
+        name
+      </isNotNull>
+      <isNotNull prepend="," property="price" >
+        price
+      </isNotNull>
+      <isNotNull prepend="," property="description" >
+        description
+      </isNotNull>
+      <isNotNull prepend="," property="categoryid" >
+        categoryid
+      </isNotNull>
+      )
+    </dynamic>
+    values
+    <dynamic prepend="(" >
+      <isNotNull prepend="," property="name" >
+        #name:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="price" >
+        #price:REAL#
+      </isNotNull>
+      <isNotNull prepend="," property="description" >
+        #description:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="categoryid" >
+        #categoryid:INTEGER#
+      </isNotNull>
+      )
+    </dynamic>
+    <selectKey resultClass="java.lang.Integer" keyProperty="id" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <select id="countByExample" parameterClass="com.ibatis.generator.model.ProductCriteria" resultClass="java.lang.Integer" >
+    select count(*) from product
+    <include refid="product.Example_Where_Clause" />
+  </select>
+  <update id="updateByExampleSelective" >
+    update product
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="record.id" >
+        id = #record.id:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="record.name" >
+        name = #record.name:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="record.price" >
+        price = #record.price:REAL#
+      </isNotNull>
+      <isNotNull prepend="," property="record.description" >
+        description = #record.description:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="record.categoryid" >
+        categoryid = #record.categoryid:INTEGER#
+      </isNotNull>
+    </dynamic>
+    <isParameterPresent >
+      <include refid="product.Example_Where_Clause" />
+    </isParameterPresent>
+  </update>
+  <update id="updateByExample" >
+    update product
+    set id = #record.id:INTEGER#,
+      name = #record.name:VARCHAR#,
+      price = #record.price:REAL#,
+      description = #record.description:VARCHAR#,
+      categoryid = #record.categoryid:INTEGER#
+    <isParameterPresent >
+      <include refid="product.Example_Where_Clause" />
+    </isParameterPresent>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterClass="com.ibatis.generator.model.Product" >
+    update product
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="name" >
+        name = #name:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="price" >
+        price = #price:REAL#
+      </isNotNull>
+      <isNotNull prepend="," property="description" >
+        description = #description:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="categoryid" >
+        categoryid = #categoryid:INTEGER#
+      </isNotNull>
+    </dynamic>
+    where id = #id:INTEGER#
+  </update>
+  <update id="updateByPrimaryKey" parameterClass="com.ibatis.generator.model.Product" >
+    update product
+    set name = #name:VARCHAR#,
+      price = #price:REAL#,
+      description = #description:VARCHAR#,
+      categoryid = #categoryid:INTEGER#
+    where id = #id:INTEGER#
+  </update>
+</sqlMap>
